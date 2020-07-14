@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	gomqtt "github.com/eclipse/paho.mqtt.golang"
@@ -230,5 +231,10 @@ func main() {
 
 	r.GET("/data", data)
 
-	r.Run(":9090")
+	if os.Getenv("GVM_ADDR") != "" {
+		r.Run(os.Getenv("GVM_ADDR"))
+	} else {
+		r.Run(":9090")
+	}
+
 }
